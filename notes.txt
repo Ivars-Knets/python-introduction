@@ -1,0 +1,7 @@
+Python version: 3.14.2
+
+
+Some commands:
+    "python -m venv .venv" - create the python environment
+    "pip install -r requirements.txt" - install 3-rd party libraries; if not working, try running cmd as admin, or add "py -m" in front of the command;
+    "python3 .\bikeshare.py" - run the project file
