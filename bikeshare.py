@@ -153,7 +153,7 @@ def load_data(city, month, day):
 
     # extract month and day of week from Start Time to create new columns
     df['Month'] = df['Start Time'].dt.month
-    df['Day of Week'] = df['Start Time'].dt.day_of_week
+    df['Day of Week'] = df['Start Time'].dt.dayofweek
 
     # filter by month if applicable
     if month != 'all':
@@ -182,7 +182,7 @@ def time_stats(df):
 
 
         # display the most common day of week
-        most_common_day = pd.to_datetime(df['Start Time']).dt.day_of_week.mode().values[0]
+        most_common_day = pd.to_datetime(df['Start Time']).dt.dayofweek.mode().values[0]
         print(f'The most common day of the week for travel: \n\t{DAY_NAMES[most_common_day]}')
 
 
@@ -204,18 +204,20 @@ def station_stats(df):
     # display most commonly used start station
     df_start_stations = access_df_col(df, 'Start Station')
     if isinstance(df_start_stations, pd.DataFrame):
-        print(f'The most common starting station: \n\t{df_start_stations.value_counts().idxmax()[0]}')
+        popular_starting_station = df['Start Station'].value_counts().idxmax()
+        print(f'The most common starting station: \n\t{popular_starting_station}')
 
 
     # display most commonly used end station
     df_end_stations = access_df_col(df, 'End Station')
     if isinstance(df_end_stations, pd.DataFrame):
-        print(f'The most common ending station: \n\t{df_end_stations.value_counts().idxmax()[0]}')
+        popular_ending_station = df['End Station'].value_counts().idxmax()
+        print(f'The most common ending station: \n\t{popular_ending_station}')
 
 
     # display most frequent combination of start station and end station trip
     if isinstance(df_start_stations, pd.DataFrame) and isinstance(df_end_stations, pd.DataFrame):
-        most_common_station_combo = df[['Start Station', 'End Station']].value_counts().idxmax()
+        most_common_station_combo = df.groupby(['Start Station', 'End Station']).size().idxmax()
         print(f'The most common combination of starting and ending stations:')
         print(f'\tStarting station: {most_common_station_combo[0]}')
         print(f'\tEnding station: {most_common_station_combo[1]}')
@@ -257,13 +259,15 @@ def user_stats(df):
     # Display counts of user types
     df_user_types = access_df_col(df, 'User Type')
     if isinstance(df_user_types, pd.DataFrame):
-        print(f'\nCount of users per type: \n{df_user_types.value_counts(dropna= False).to_string(header= False)}')
+        user_type_count = df['User Type'].value_counts(dropna= False).to_string(header= False)
+        print(f'\nCount of users per type: \n{user_type_count}')
 
 
     # Display counts of gender
     df_user_genders = access_df_col(df, 'Gender')
     if isinstance(df_user_genders, pd.DataFrame):
-        print(f'\nCount of users per gender: \n{df_user_genders.value_counts(dropna= False).to_string(header= False)}')
+        user_gender_count = df['Gender'].value_counts(dropna= False).to_string(header= False)
+        print(f'\nCount of users per gender: \n{user_gender_count}')
 
 
     # Display earliest, most recent, and most common year of birth
