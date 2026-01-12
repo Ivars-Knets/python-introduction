@@ -1,4 +1,4 @@
-Python project and practice for the "Introduction to Programming with Python I" course on udacity.
+Python project and practice for the "Introduction to Python" course on udacity.
 
 Python version used: 3.14.2
 
