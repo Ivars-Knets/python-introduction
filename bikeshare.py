@@ -124,7 +124,7 @@ def get_filters():
     print('Hello! Let\'s explore some US bikeshare data!')
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
 
-    input_city = validatedInput(f'Input a city ({', '.join(CITY_DATA.keys())}): ', CITY_DATA.keys())
+    input_city = validatedInput(f'Input a city ({", ".join(CITY_DATA.keys())}): ', CITY_DATA.keys())
     input_month = validatedInput(f'Input name of month (between "{MONTH_NAMES[0]}" and "{MONTH_NAMES[-1]}") ("all" is acceptable): ', MONTH_NAMES, True)
     input_day = validatedInput('Input name of day (eg. "friday") ("all" is acceptable): ', DAY_NAMES, True)
 
